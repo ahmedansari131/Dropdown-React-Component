@@ -1,4 +1,10 @@
-import React, { useEffect, useId, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useId,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { KeyboardArrowDownIcon } from "..";
 import useDropdown from "../../context/dropdownContext";
 
@@ -7,6 +13,7 @@ const DropdownWrapper = (props) => {
   const generateId = useId();
   const { dropdownState, dropdownController } = useDropdown();
   const dropdownRef = useRef(null);
+  const [positionY, setPositionY] = useState("top-full");
 
   const clickOutsideHandler = () => {
     window.addEventListener("click", (e) => {
@@ -15,6 +22,21 @@ const DropdownWrapper = (props) => {
       }
     });
   };
+
+  const adjustPosition = () => {
+    if (dropdownRef.current) {
+      const { top } = dropdownRef.current.getBoundingClientRect();
+      if (top + dropdownRef.current.clientHeight >= window.innerHeight) {
+        setPositionY("bottom-full -translate-y-2");
+      } else {
+        setPositionY("top-full");
+      }
+    }
+  };
+
+  useLayoutEffect(() => {
+    adjustPosition();
+  }, [dropdownState]);
 
   useEffect(() => {
     clickOutsideHandler();
@@ -36,7 +58,7 @@ const DropdownWrapper = (props) => {
 
         <div
           ref={dropdownRef}
-          className={`absolute top-full left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10 ${
+          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10 ${
             dropdownState && dropdownState === "dropdown-" + generateId
               ? "translate-y-2 z-10 transition-all duration-300"
               : "h-0 -translate-y-5 overflow-hidden"
