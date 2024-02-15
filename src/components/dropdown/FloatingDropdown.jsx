@@ -51,15 +51,23 @@ const DropdownWrapper = (props) => {
           className="w-full border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between"
         >
           {label || "Label"}
-          <span className="pointer-events-none">
-            <KeyboardArrowDownIcon />
+          <span className="pointer-events-none relative ">
+            <KeyboardArrowDownIcon
+              style={{
+                transition: "transform 0.2s ease-in-out",
+                transform:
+                  dropdownState === "dropdown-" + generateId
+                    ? "rotate(180deg)"
+                    : "rotate(0deg)",
+              }}
+            />
           </span>
         </div>
 
         <div
           ref={dropdownRef}
-          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10 ${
-            dropdownState && dropdownState === "dropdown-" + generateId
+          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2  cursor-pointer rounded-md -z-10 ${
+            dropdownState === "dropdown-" + generateId
               ? "translate-y-2 z-10 transition-all duration-300"
               : "h-0 -translate-y-5 overflow-hidden"
           }`}
