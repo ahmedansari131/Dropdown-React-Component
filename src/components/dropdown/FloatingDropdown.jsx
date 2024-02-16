@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { KeyboardArrowDownIcon } from "..";
 import useDropdown from "../../context/dropdownContext";
+import clsx from "clsx";
 
 const DropdownWrapper = (props) => {
   const { label, list, hover = false } = props;
@@ -57,6 +58,13 @@ const DropdownWrapper = (props) => {
     }
   };
 
+  const dropdownContent = {
+    defaultStyle:
+      "absolute left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10",
+    isOpen: "z-10 transition-all duration-300 ",
+    isClose: "h-0 -translate-y-6 overflow-hidden",
+  };
+
   useLayoutEffect(() => {
     adjustPosition();
   }, [dropdownState]);
@@ -72,7 +80,7 @@ const DropdownWrapper = (props) => {
       onMouseLeave={mouseLeaveHandler}
       onClick={mouseClickHandler}
     >
-      <div className=" w-full">
+      <div className="w-full">
         <div className="w-full border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between select-none">
           {label || "Label"}
           <span className="pointer-events-none relative ">
@@ -88,16 +96,15 @@ const DropdownWrapper = (props) => {
           </span>
         </div>
 
-        <div className="h-2 "></div>
+        <div className="h-2"></div>
 
         <div
           ref={dropdownRef}
           onMouseLeave={mouseLeaveHandler}
-          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10 ${
-            dropdownState === generateId
-              ? "z-10 transition-all duration-300"
-              : "h-0 -translate-y-6 overflow-hidden"
-          }`}
+          className={clsx(dropdownContent.defaultStyle, positionY, {
+            [dropdownContent.isOpen]: dropdownState === generateId,
+            [dropdownContent.isClose]: dropdownState !== generateId,
+          })}
         >
           <ul>
             {list.map((item) => (
