@@ -8,9 +8,9 @@ function App() {
   return (
     <DropdownProvider value={{ dropdownState, dropdownController }}>
       <div className="w-full h-screen bg-slate-900 flex justify-center items-center gap-5">
-        <FloatingDropdown list={["Home", "About", "Services", "Contact"]} />
-        <FloatingDropdown list={["Home", "About", "Services", "Contact"]} />
-        <FloatingDropdown list={["Home", "About", "Services", "Contact"]} />
+        <FloatingDropdown label={"Hover"} hover={true} list={["Home", "About", "Services", "Contact"]} />
+        <FloatingDropdown label={"Click"} list={["Home", "About", "Services", "Contact"]} />
+        <FloatingDropdown label={"Click"} list={["Home", "About", "Services", "Contact"]} />
       </div>
     </DropdownProvider>
   );
