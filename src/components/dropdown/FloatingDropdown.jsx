@@ -9,7 +9,7 @@ import { KeyboardArrowDownIcon } from "..";
 import useDropdown from "../../context/dropdownContext";
 
 const DropdownWrapper = (props) => {
-  const { label, list } = props;
+  const { label, list, hover = false } = props;
   const generateId = useId();
   const { dropdownState, dropdownController } = useDropdown();
   const dropdownRef = useRef(null);
@@ -34,6 +34,29 @@ const DropdownWrapper = (props) => {
     }
   };
 
+  const mouseEnterHandler = () => {
+    if (hover) {
+      dropdownController(generateId, hover);
+    }
+  };
+
+  const mouseLeaveHandler = (e) => {
+    if (
+      hover &&
+      dropdownRef.current &&
+      (!e.target.contains(dropdownRef.current) ||
+        e.target.contains(dropdownRef.current))
+    ) {
+      dropdownController(null);
+    }
+  };
+
+  const mouseClickHandler = () => {
+    if (!hover) {
+      dropdownController(generateId, hover);
+    }
+  };
+
   useLayoutEffect(() => {
     adjustPosition();
   }, [dropdownState]);
@@ -43,20 +66,21 @@ const DropdownWrapper = (props) => {
   }, [dropdownRef.current]);
 
   return (
-    <div className="text-gray-100 min-w-80">
-      <div className="relative w-full">
-        <div
-          id={`dropdown-${generateId}`}
-          onClick={(e) => dropdownController(e.target.id)}
-          className="w-full border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between"
-        >
+    <div
+      className="text-gray-100 min-w-80 relative"
+      onMouseEnter={mouseEnterHandler}
+      onMouseLeave={mouseLeaveHandler}
+      onClick={mouseClickHandler}
+    >
+      <div className=" w-full">
+        <div className="w-full border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between select-none">
           {label || "Label"}
           <span className="pointer-events-none relative ">
             <KeyboardArrowDownIcon
               style={{
                 transition: "transform 0.2s ease-in-out",
                 transform:
-                  dropdownState === "dropdown-" + generateId
+                  dropdownState === generateId
                     ? "rotate(180deg)"
                     : "rotate(0deg)",
               }}
@@ -64,12 +88,15 @@ const DropdownWrapper = (props) => {
           </span>
         </div>
 
+        <div className="h-2 "></div>
+
         <div
           ref={dropdownRef}
-          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2  cursor-pointer rounded-md -z-10 ${
-            dropdownState === "dropdown-" + generateId
-              ? "translate-y-2 z-10 transition-all duration-300"
-              : "h-0 -translate-y-5 overflow-hidden"
+          onMouseLeave={mouseLeaveHandler}
+          className={`absolute ${positionY} left-0 w-full bg-slate-700 py-2 cursor-pointer rounded-md -z-10 ${
+            dropdownState === generateId
+              ? "z-10 transition-all duration-300"
+              : "h-0 -translate-y-6 overflow-hidden"
           }`}
         >
           <ul>

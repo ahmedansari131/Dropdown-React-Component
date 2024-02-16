@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const useDropdownController = () => {
   const [dropdownState, setDropdownState] = useState(null);
-
-  const dropdownController = (id) => {
-    if ((id === dropdownState) | null) {
+  const dropdownController = (id, isHoverState) => {
+    if ((id === dropdownState && !isHoverState) | null) {
       setDropdownState(null);
       return;
     }
@@ -16,38 +15,3 @@ const useDropdownController = () => {
 };
 
 export default useDropdownController;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from "react";
-
-// const useDropdownController = (props) => {
-//   const [dropdownId, setDropdownId] = useState([]);
-//   const dropdownController = (id) => {
-//     if (dropdownId.includes(id)) {
-//       setDropdownId(dropdownId.filter((item) => item !== id));
-//       return;
-//     }
-//     setDropdownId([...dropdownId, id]);
-//   };
-
-//   return { dropdownId, dropdownController };
-// };
-
-// export default useDropdownController;
