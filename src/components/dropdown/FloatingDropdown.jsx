@@ -5,12 +5,12 @@ import React, {
   useLayoutEffect,
   useRef,
 } from "react";
-import { KeyboardArrowDownIcon } from "..";
+import { DropdownContent, KeyboardArrowDownIcon } from "..";
 import useDropdown from "../../context/dropdownContext";
 import clsx from "clsx";
 
 const DropdownWrapper = (props) => {
-  const { label, list, hover = false } = props;
+  const { label, children, hover = false } = props;
   const generateId = useId();
   const { dropdownState, dropdownController } = useDropdown();
   const dropdownRef = useRef(null);
@@ -106,13 +106,7 @@ const DropdownWrapper = (props) => {
             [dropdownContent.isClose]: dropdownState !== generateId,
           })}
         >
-          <ul>
-            {list.map((item) => (
-              <li key={item} className="py-2 px-3 hover:bg-slate-800 text-sm">
-                {item}
-              </li>
-            ))}
-          </ul>
+          <DropdownContent list ={children} />
         </div>
       </div>
     </div>
