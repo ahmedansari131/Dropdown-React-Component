@@ -1,27 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import cn from "../../utils/cn";
 
 const DropdownContent = (props) => {
-  const { list } = props;
+  const { className, children } = props;
 
   return (
-    <div>
-      {list && (
-        <ul>
-          {list.map((item) => (
-            <li
-              key={item?.name}
-              className="py-2 px-3 hover:bg-slate-800 text-sm flex items-center gap-3"
-              onClick={(e) => {
-                item?.listFunctionHandler();
-              }}
-            >
-              {item?.icon && <span>{item?.icon}</span>}
-
-              {item?.name}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className={cn("bg-slate-700 py-2 rounded-md", className)}>
+      {children}
     </div>
   );
 };
