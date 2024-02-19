@@ -57,13 +57,13 @@ const DropdownWrapper = (props) => {
 
   const dropdownContentStyle = {
     defaultStyle: "absolute left-0 w-full cursor-pointer -z-10",
-    isOpen: "z-10 transition-all duration-300 ",
+    isOpen: "z-10 transition-all duration-300",
     isClose: "h-0 -translate-y-6 overflow-hidden",
   };
 
   return (
     <>
-      <div className="w-full relative rounded-md">
+      <div className="w-full relative rounded-md ">
         <Label
           className={className}
           onMouseEnter={mouseEnterHandler}
