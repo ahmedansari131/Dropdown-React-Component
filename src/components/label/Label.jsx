@@ -7,7 +7,7 @@ const Label = ({ label, icon, className, ...props }) => {
     <div
       {...props}
       className={cn(
-        "w-full text-gray-100 border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between select-none",
+        "w-full bg-gray-800 text-gray-100 border border-slate-600 cursor-pointer px-3 py-2 rounded-md flex items-center justify-between select-none",
         className
       )}
     >
