@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "../icon/Icon";
 import cn from "../../utils/cn";
 
-const List = ({ listName, icon, className = "", ...props }) => {
+const List = ({ listName, icon, className, ...props }) => {
   return (
     <li
       className={cn(
